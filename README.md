@@ -15,11 +15,11 @@
 - set color with color palet
 
 ### Screenshots
-coming soon
+
 ![Screenshot](https://github.com/BatuhanGunes/imageOperations_V2/blob/master/Screenshot.png)
 
 ### code
-coming soon
+
 ```javascript
         Bitmap bmp;
 
