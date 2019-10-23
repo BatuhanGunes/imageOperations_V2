@@ -94,11 +94,13 @@ namespace imageOperations
             }
         }
 
-
         private void buttonGrayScale_Click(object sender, EventArgs e)
         {
             if (bmp != null)
             {
+                // bmp refresh
+                bmp = (Bitmap)Bitmap.FromFile(textBoxFileName.Text);
+
                 for (int y = 0; y < bmp.Height; y++)
                 {
                     for (int x = 0; x < bmp.Width; x++)
@@ -122,17 +124,30 @@ namespace imageOperations
         {
             if (bmp != null)
             {
-                int rgb;
-                Color c;
+                // bmp refresh
+                bmp = (Bitmap)Bitmap.FromFile(textBoxFileName.Text);
+                int treshold = Convert.ToInt32(numericTreshold.Text);
+                
 
                 for (int y = 0; y < bmp.Height; y++)
                 {
                     for (int x = 0; x < bmp.Width; x++)
                     {
-                        c = bmp.GetPixel(x, y);
-                        //now apply a sepia filter
-                        rgb = (int)Math.Round(.299 * c.R + .587 * c.G + .114 * c.B);
-                        bmp.SetPixel(x, y, Color.FromArgb(rgb, rgb, rgb));
+                        Color c = bmp.GetPixel(x, y);
+
+                        int r = c.R;
+                        int g = c.G;
+                        int b = c.B;
+                        int avg = (r + g + b) / 3;
+
+                        if (avg >= treshold)
+                        {
+                            bmp.SetPixel(x, y, Color.FromArgb(255, 255, 255));
+                        }
+                        else
+                        {
+                            bmp.SetPixel(x, y, Color.FromArgb(0, 0, 0));
+                        }
                     }
                 }
                 xOryChange();
