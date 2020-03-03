@@ -1,18 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+# imageOperations_V2
 
-namespace imageOperations
-{
-    public partial class Form1 : Form
-    {
+* pikselleri almak, pikselleri ayarlamak, bitmap ve gri tonlama işlemleri c # ile
 
+[English](https://github.com/BatuhanGunes/imageOperations_V2/blob/master/README.md) / Turkish
+
+### Uygulamada yapılabilecek işlemler
+
+- Fotoğraf yükleme
+- Resim çözünürlüğüne bakma
+- piksellerle renk değeri elde etme
+- renk değerini piksellerle ayarlama
+- fare hareketi ile piksel değeri elde etme
+- görüntü gri skalasını ayarlama
+- görüntü bitmap'ini ayarlama
+- renk paleti ile renk ayarlama
+
+### Ekran Görüntüleri
+
+![Screenshot](https://github.com/BatuhanGunes/imageOperations_V2/blob/master/Screenshot.png)
+
+### Kod
+
+```javascript
         Bitmap bmp;
 
         public Form1()
@@ -242,5 +251,4 @@ namespace imageOperations
         {
             rgbChange();
         }
-    }
-}
+```
