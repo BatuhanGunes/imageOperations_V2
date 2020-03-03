@@ -2,6 +2,7 @@
 
 * get piksel, set piksel, bitmap and gray scale operations with c#
 
+English / [Turkish](https://github.com/BatuhanGunes/imageOperations_V2/blob/master/README(turkish).md)
 
 ### Operations that can be done in the application
 
