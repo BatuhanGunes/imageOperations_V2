@@ -1,254 +1,43 @@
-# imageOperations_V2
+**Language :** English / [Turkish](https://github.com/BatuhanGunes/imageOperations_V2/blob/master/README(turkish).md)
 
-* get piksel, set piksel, bitmap and gray scale operations with c#
+# Image Operations
 
-English / [Turkish](https://github.com/BatuhanGunes/imageOperations_V2/blob/master/README(turkish).md)
+In this program prepared in C #, various operations can be performed with pictures. The operations you can do with the picture in the program are as follows;
+- Upload an image
+- Get color value with pixels
+- Adjust color value with pixels
+- Getting pixel value with mouse movement
+- Adjust the image grayscale
+- Set the image bitmap
+- Color adjustment with the color palette
 
-### Operations that can be done in the application
+`
+Project creation date: October 2019
+`
 
-- Image upload
-- See picture resolution
-- get color value with piksel
-- set color value with piksel
-- get piksel valur with mouse move
-- set image gray scale
-- set image bitmap
-- set color with color palet
+## Screenshots
 
-### Screenshots
+<img align="center" src="https://github.com/BatuhanGunes/imageOperations_V2/blob/master/Screenshot.png"> 
 
-![Screenshot](https://github.com/BatuhanGunes/imageOperations_V2/blob/master/Screenshot.png)
+## Getting Started
 
-### code
+Download a copy of the project files to your local machine to run the project. After obtaining the required environments, you can open the project in this environment run it and use the application through the window that opens after it is run. When trying to run a second time, simply run ~\imageOperations_v2\bin\Debug\imageOperations_v2.exe in the location of the project.
 
-```javascript
-        Bitmap bmp;
+### Prerequisites
 
-        public Form1()
-        {
-            InitializeComponent();
-        }
+- Microsoft Visual Studio 
+
+To run the project, you must first obtain any version of Microsoft Visual Studio software that has the C # IDE for your system from [Microsoft Visual Studio](https://visualstudio.microsoft.com/) and install it on your local machine. Then, it will be enough to introduce our project to IDE environment and perform debug operation. If you do not want to download a program, you can run the project at [Microsoft Visual Studio Online](https://visualstudio.microsoft.com/en/services/visual-studio-online/).
+
+## Authors
+
+* **Batuhan Güneş**  - [BatuhanGunes](https://github.com/BatuhanGunes)
+
+See also the list of [contributors](https://github.com/BatuhanGunes/imageOperations_V2/graphs/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the Apache License - see the [LICENSE.md](https://github.com/BatuhanGunes/imageOperations_V2/blob/master/LICENSE) file for details.
 
 
-        private void buttonExit_Click(object sender, EventArgs e)
-        {
-            Environment.Exit(0);    //TurnOff Aplication
-        }
 
-        private void buttonUploadImage_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                openFileDialog1.ShowDialog();
-                pictureBox.ImageLocation = openFileDialog1.FileName;
-                bmp = (Bitmap)Bitmap.FromFile(openFileDialog1.FileName);
-                textBoxFileName.Text = openFileDialog1.FileName;
-                labelResolution.Text = pictureBox.Height.ToString() + " X " + pictureBox.Width.ToString();
-
-                NumericGetX.Value = 0;
-                NumericGetY.Value = 0;
-                NumericRed.Value = 255;
-                NumericGreen.Value = 255;
-                NumericBlue.Value = 255;
-                textBoxHexa.Clear();
-                ColorPanel.BackColor = Color.FromArgb(255,255,255);
-
-                this.Refresh();
-            }
-            catch
-            {
-                MessageBox.Show("Please add a photo", "information");
-            }
-        }
-
-        private void ColorPanel_Click(object sender, EventArgs e)
-        {
-            ColorDialog Color = new ColorDialog();
-            Color.ShowDialog();
-            ColorPanel.BackColor = Color.Color;
-
-            NumericRed.Text = Convert.ToString(Color.Color.R);
-            NumericGreen.Text = Convert.ToString(Color.Color.G);
-            NumericBlue.Text = Convert.ToString(Color.Color.B);
-            textBoxHexa.Text = Color.Color.Name;
-        }
-
-        
-        private void buttonSetPiksel_Click(object sender, EventArgs e)
-        {
-            if (bmp != null)
-            {
-                if (!string.IsNullOrEmpty(NumericGetX.Text) && !string.IsNullOrEmpty(NumericGetY.Text))
-                {
-                    if (!string.IsNullOrEmpty(NumericRed.Text) && !string.IsNullOrEmpty(NumericGreen.Text) && !string.IsNullOrEmpty(NumericBlue.Text))
-                    {
-                        int r, g, b;
-                        int x, y;
-
-                        r = Convert.ToInt32(NumericRed.Text);
-                        g = Convert.ToInt32(NumericGreen.Text);
-                        b = Convert.ToInt32(NumericBlue.Text);
-
-                        x = Convert.ToInt32(NumericGetX.Text);
-                        y = Convert.ToInt32(NumericGetY.Text);
-
-                        bmp.SetPixel(x, y, Color.FromArgb(r, g, b));
-                        ColorPanel.BackColor = Color.FromArgb(r, g, b);
-                        textBoxHexa.Text = Color.FromArgb(r, g, b).Name;
-                        this.Refresh();
-
-                        MessageBox.Show("The values of the target pixels have been changed.", "information");
-                    }
-                }
-            }
-        }
-
-        private void buttonGrayScale_Click(object sender, EventArgs e)
-        {
-            if (bmp != null)
-            {
-                // bmp refresh
-                bmp = (Bitmap)Bitmap.FromFile(textBoxFileName.Text);
-
-                for (int y = 0; y < bmp.Height; y++)
-                {
-                    for (int x = 0; x < bmp.Width; x++)
-                    {
-                        Color c = bmp.GetPixel(x, y);
-
-                        int r = c.R;
-                        int g = c.G;
-                        int b = c.B;
-                        int avg = (r + g + b) / 3;
-                        bmp.SetPixel(x, y, Color.FromArgb(avg, avg, avg));
-                    }
-                }
-                xOryChange();
-                pictureBox.Image = bmp;
-                this.Refresh();
-            }
-        }
-
-        private void buttonBitmap_Click(object sender, EventArgs e)
-        {
-            if (bmp != null)
-            {
-                // bmp refresh
-                bmp = (Bitmap)Bitmap.FromFile(textBoxFileName.Text);
-                int treshold = Convert.ToInt32(numericTreshold.Text);
-                
-
-                for (int y = 0; y < bmp.Height; y++)
-                {
-                    for (int x = 0; x < bmp.Width; x++)
-                    {
-                        Color c = bmp.GetPixel(x, y);
-
-                        int r = c.R;
-                        int g = c.G;
-                        int b = c.B;
-                        int avg = (r + g + b) / 3;
-
-                        if (avg >= treshold)
-                        {
-                            bmp.SetPixel(x, y, Color.FromArgb(255, 255, 255));
-                        }
-                        else
-                        {
-                            bmp.SetPixel(x, y, Color.FromArgb(0, 0, 0));
-                        }
-                    }
-                }
-                xOryChange();
-                pictureBox.Image = bmp;
-                this.Refresh();
-            }       
-        }
-
-        private void xOryChange()
-        {
-            if (bmp != null)
-            {
-                if (!string.IsNullOrEmpty(NumericGetX.Text) && !string.IsNullOrEmpty(NumericGetY.Text))
-                {
-                    int x, y;
-                    x = Convert.ToInt32(NumericGetX.Text);
-                    y = Convert.ToInt32(NumericGetY.Text);
-                    Color color = bmp.GetPixel(x, y);
-
-                    NumericRed.Text = Convert.ToString(color.R);
-                    NumericGreen.Text = Convert.ToString(color.G);
-                    NumericBlue.Text = Convert.ToString(color.B);
-
-                    ColorPanel.BackColor = color;
-                    textBoxHexa.Text = color.Name;
-                }
-            }
-
-        }
-
-        private void pictureBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            this.Refresh();
-
-            if (bmp != null)
-            {
-                NumericGetX.Text = Convert.ToString(e.X);
-                NumericGetY.Text = Convert.ToString(e.Y);
-
-                xOryChange();
-            }
-        }
-
-        private void buttonReset_Click(object sender, EventArgs e)
-        {
-            if (bmp != null)
-            {
-                bmp = (Bitmap)Bitmap.FromFile(textBoxFileName.Text);
-                pictureBox.Image = bmp;
-                xOryChange();
-                this.Refresh();
-            }
-        }
-
-        private void rgbChange()
-        {
-            if (!string.IsNullOrEmpty(NumericRed.Text) && !string.IsNullOrEmpty(NumericGreen.Text) && !string.IsNullOrEmpty(NumericBlue.Text))
-            {
-                int r, g, b;
-
-                r = Convert.ToInt32(NumericRed.Text);
-                g = Convert.ToInt32(NumericGreen.Text);
-                b = Convert.ToInt32(NumericBlue.Text);
-
-                ColorPanel.BackColor = Color.FromArgb(r, g, b);
-                textBoxHexa.Text = Color.FromArgb(r, g, b).Name;
-                this.Refresh();
-            }
-        }
-
-        private void NumericGetX_ValueChanged(object sender, EventArgs e)
-        {
-            xOryChange();
-        }
-
-        private void NumericGetY_ValueChanged(object sender, EventArgs e)
-        {
-            xOryChange();
-        }
-
-        private void NumericRed_ValueChanged(object sender, EventArgs e)
-        {
-            rgbChange();
-        }
-
-        private void NumericGreen_ValueChanged(object sender, EventArgs e)
-        {
-            rgbChange();
-        }
-
-        private void NumericBlue_ValueChanged(object sender, EventArgs e)
-        {
-            rgbChange();
-        }
-```
